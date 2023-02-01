@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="laundry" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LAPTOP-KRNHDCFM;Initial Catalog=laundry;Integrated Security=True" SettingsObjectName="SpeedrunAppLaundry.Properties.Settings" SettingsPropertyName="laundryConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DetailPaket" Member="DetailPakets">
+    <Type Name="DetailPaket">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPelanggan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idPaket" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Harga" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TanggalMulai" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TanggalSelesai" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="DetailPaket_DetailTransaksi" Member="DetailTransaksis" ThisKey="id" OtherKey="idDetailPaket" Type="DetailTransaksi" />
+      <Association Name="Paket_DetailPaket" Member="Paket" ThisKey="idPaket" OtherKey="id" Type="Paket" IsForeignKey="true" />
+      <Association Name="Pelanggan_DetailPaket" Member="Pelanggan" ThisKey="idPelanggan" OtherKey="id" Type="Pelanggan" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetailTransaksi" Member="DetailTransaksis">
+    <Type Name="DetailTransaksi">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idTransaksi" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idLayanan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idDetailPaket" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HargaUnit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TotalUnit" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="TanggalSelesai" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="DetailPaket_DetailTransaksi" Member="DetailPaket" ThisKey="idDetailPaket" OtherKey="id" Type="DetailPaket" IsForeignKey="true" />
+      <Association Name="Layanan_DetailTransaksi" Member="Layanan" ThisKey="idLayanan" OtherKey="id" Type="Layanan" IsForeignKey="true" />
+      <Association Name="Transaksi_DetailTransaksi" Member="Transaksi" ThisKey="idTransaksi" OtherKey="id" Type="Transaksi" IsForeignKey="true" />
+      <Association Name="Transaksi1_DetailTransaksi" Member="Transaksi1" ThisKey="idTransaksi" OtherKey="id" Type="Transaksi1" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Jabatan" Member="Jabatans">
+    <Type Name="Jabatan">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NamaJabatan" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Jabatan_Pegawai" Member="Pegawais" ThisKey="id" OtherKey="idJabatan" Type="Pegawai" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Kategori" Member="Kategoris">
+    <Type Name="Kategori">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nama" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Kategori_Layanan" Member="Layanans" ThisKey="id" OtherKey="idKategori" Type="Layanan" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Layanan" Member="Layanans">
+    <Type Name="Layanan">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nama" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idKategori" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idUnit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HargaUnit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EstimasiDurasi" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Layanan_DetailTransaksi" Member="DetailTransaksis" ThisKey="id" OtherKey="idLayanan" Type="DetailTransaksi" />
+      <Association Name="Kategori_Layanan" Member="Kategori" ThisKey="idKategori" OtherKey="id" Type="Kategori" IsForeignKey="true" />
+      <Association Name="Unit_Layanan" Member="Unit" ThisKey="idUnit" OtherKey="id" Type="Unit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Paket" Member="Pakets">
+    <Type Name="Paket">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idLayanan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TotalUnit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Harga" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nama" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Paket_DetailPaket" Member="DetailPakets" ThisKey="id" OtherKey="idPaket" Type="DetailPaket" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pegawai" Member="Pegawais">
+    <Type Name="Pegawai">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Nama" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Alamat" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Notelp" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="TglLahir" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="idJabatan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Jabatan_Pegawai" Member="Jabatan" ThisKey="idJabatan" OtherKey="id" Type="Jabatan" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pelanggan" Member="Pelanggans">
+    <Type Name="Pelanggan">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nama" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Notelp" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Alamat" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Pelanggan_DetailPaket" Member="DetailPakets" ThisKey="id" OtherKey="idPelanggan" Type="DetailPaket" />
+      <Association Name="Pelanggan_Voucher" Member="Vouchers" ThisKey="id" OtherKey="idPelanggan" Type="Voucher" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Transaksi" Member="Transaksis">
+    <Type Name="Transaksi">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPelanggan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPegawai" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TanggalTransaksi" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EstimasiSelesai" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Transaksi_DetailTransaksi" Member="DetailTransaksis" ThisKey="id" OtherKey="idTransaksi" Type="DetailTransaksi" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Unit" Member="Units">
+    <Type Name="Unit">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nama" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Unit_Layanan" Member="Layanans" ThisKey="id" OtherKey="idUnit" Type="Layanan" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Voucher" Member="Vouchers">
+    <Type Name="Voucher">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Kode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PotonganHarga" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idPelanggan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Pelanggan_Voucher" Member="Pelanggan" ThisKey="idPelanggan" OtherKey="id" Type="Pelanggan" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Transaksi" Member="Transaksi1s">
+    <Type Name="Transaksi1">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPelanggan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPegawai" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TanggalTransaksi" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EstimasiSelesai" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Transaksi1_DetailTransaksi" Member="DetailTransaksis" ThisKey="id" OtherKey="idTransaksi" Type="DetailTransaksi" />
+    </Type>
+  </Table>
+</Database>
